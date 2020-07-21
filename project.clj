@@ -6,4 +6,5 @@
   :dependencies [[org.clojure/clojure "1.10.1"]]
   :main ^:skip-aot health-crud.core
   :target-path "target/%s"
+  :plugins [[jonase/eastwood "0.3.10"] [lein-cljfmt "0.6.8"] [lein-kibit "0.1.8"]]
   :profiles {:uberjar {:aot :all}})
