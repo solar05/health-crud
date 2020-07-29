@@ -9,7 +9,7 @@
       first :count pos?))
 
 (defn migrate []
-  (when (not (migrated?))
+  (when-not (migrated?)
     (println "Migrating database...") (flush)
     (sql/db-do-commands patient/spec
                         (sql/create-table-ddl

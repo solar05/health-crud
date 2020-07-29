@@ -16,8 +16,8 @@
   (view/new-patient []))
 
 (defn create [request]
-  (dump/handle-dump (-> request :params))
-  (let [patient (extractor/extract-patient (-> request :params))
+  (dump/handle-dump (:params request))
+  (let [patient (extractor/extract-patient (:params request))
         errors (validator/validate patient)]
     (if (empty? errors)
       (do

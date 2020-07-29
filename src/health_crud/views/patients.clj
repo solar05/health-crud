@@ -9,7 +9,7 @@
 (defn stringify-curr-val [val] (str "Current value: " val))
 
 (defn stringify-date [date]
-  (first (str/split (.toString date) #" ")))
+  (first (str/split (str date) #" ")))
 
 (defn display-errors [errors]
   (map (fn [error] [:div {:class "alert alert-danger" :role "alert"} error]) errors))
@@ -68,8 +68,8 @@
                  (form/submit-button {:class "btn btn-success btn-lg"} "Update"))])
 
 (defn display-patients [patients info]
-  [:h2 "patients"]
   [:table {:class "table"}
+   [:h2 "Patients"]
    (display-info info)
    [:thead
     [:th {:scope "col"} "#"]

@@ -1,6 +1,5 @@
 (ns health-crud.services.patient-validator
   (:require [clojure.spec.alpha :as s]))
-
 (s/def ::ne-string (s/and string? not-empty))
 
 (s/def ::valid-name (partial re-matches #"([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){2,30}"))
@@ -24,6 +23,7 @@
 (s/def ::correct-year (partial re-matches #"([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))"))
 
 (s/def ::birth-date (s/and ::ne-string ::correct-year))
+;???
 
 (s/def ::adress ::ne-string)
 

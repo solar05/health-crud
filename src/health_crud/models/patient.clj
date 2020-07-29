@@ -7,7 +7,7 @@
   (java.time.LocalDateTime/now))
 
 (defn all []
-  (into [] (sql/query spec ["select * from patients where deleted_at IS NULL order by id desc"])))
+  (vec (sql/query spec ["select * from patients where deleted_at IS NULL order by id desc"])))
 
 (defn prepare-date [date]
   (java.sql.Timestamp/valueOf (str date " 00:00:00")))
