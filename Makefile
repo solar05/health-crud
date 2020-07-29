@@ -10,7 +10,7 @@ check-style:
 	lein kibit
 
 check-namespaces:
-	lein eastwood
+	lein eastwood '{:exclude-linters [:suspicious-expression]}'
 
 tests:
 	lein trampoline test
