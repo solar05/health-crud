@@ -10,7 +10,10 @@
 
 (defn index [params]
   (dump/handle-dump params)
-  (view/index (model/all) []))
+  (if (contains? params :page)
+    (let [page (Math/abs (Integer/parseInt (:page params)))]
+      (view/index (model/paginate page 5) [] page))
+    (view/index (model/paginate 0 5) [] 0)))
 
 (defn new-patient []
   (view/new-patient []))
@@ -22,7 +25,7 @@
     (if (empty? errors)
       (do
         (model/create patient)
-        (view/index (model/all) ["Patient successfully created!"]))
+        (view/index (model/paginate 0 5) ["Patient successfully created!"] 0))
       (view/new-patient errors))))
 
 (defn show-patient [id]
@@ -37,7 +40,7 @@
     (if (empty? errors)
       (do
         (model/update-patient patient_id patient)
-        (view/index (model/all) ["Patient successfully updated!"]))
+        (view/index (model/paginate 0 5) ["Patient successfully updated!"] 0))
       (view/show-patient patient errors))))
 
 (defn delete-patient [id]

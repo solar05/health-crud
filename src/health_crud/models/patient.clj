@@ -6,8 +6,15 @@
 (defn now []
   (java.time.LocalDateTime/now))
 
+;(into [] (sql/query spec ["select * from (select * from patients where deleted_at IS NULL) AS foo order by id desc limit 2 offset 3"]))
+
 (defn all []
   (vec (sql/query spec ["select * from patients where deleted_at IS NULL order by id desc"])))
+
+(defn paginate [patients-page num-per-patient]
+  (vec (sql/query spec
+                  [(str "select * from (select * from patients where deleted_at IS NULL) AS patients order by id desc "
+                        "limit " num-per-patient "offset " (Math/abs (* 5 patients-page)))])))
 
 (defn prepare-date [date]
   (java.sql.Timestamp/valueOf (str date " 00:00:00")))

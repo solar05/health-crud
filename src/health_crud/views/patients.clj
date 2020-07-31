@@ -17,6 +17,15 @@
 (defn display-info [info]
   (map (fn [message] [:div {:class "alert alert-primary" :role "alert"} message]) info))
 
+(defn display-pagination [page patients-count]
+  [:div {:class "btn-group" :role "group"}
+   (if (<= page 0)
+     [:a {:class "btn btn-secondary" :href "#" :disabled true} "Back"]
+     [:a {:class "btn btn-primary" :href (util/url "/patients?page=" (dec page))} "Back"])
+   (if (< patients-count 5)
+     [:a {:class "btn btn-secondary" :href "#" :disabled true} "Next"]
+     [:a {:class "btn btn-primary" :href (util/url "/patients?page=" (inc page))} "Next"])])
+
 (defn patient-new-form [errors]
   [:div {:id "patient-new-form"}
    (display-errors errors)
@@ -67,7 +76,7 @@
                   (form/text-area {:class "form-control" :placeholder "CHI" :required true} "chi_number" (:chi_number patient))]
                  (form/submit-button {:class "btn btn-success btn-lg"} "Update"))])
 
-(defn display-patients [patients info]
+(defn display-patients [patients info page]
   [:table {:class "table"}
    [:h2 "Patients"]
    (display-info info)
@@ -92,11 +101,12 @@
               (form/form-to [:delete (util/url "/patients/" (:id patient))]
                             (anti-forgery/anti-forgery-field)
                             (form/submit-button {:class "btn btn-danger"} "Delete"))]]])
-     patients)]])
+     patients)]
+   (display-pagination page (count patients))])
 
-(defn index [patients info]
+(defn index [patients info page]
   (layout/common "Health-crud"
-                 (display-patients patients info)))
+                 (display-patients patients info page)))
 
 (defn new-patient [errors]
   (layout/common "Create patient" (patient-new-form errors)))
