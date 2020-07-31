@@ -6,8 +6,6 @@
 (defn now []
   (java.time.LocalDateTime/now))
 
-;(into [] (sql/query spec ["select * from (select * from patients where deleted_at IS NULL) AS foo order by id desc limit 2 offset 3"]))
-
 (defn all []
   (vec (sql/query spec ["select * from patients where deleted_at IS NULL order by id desc"])))
 

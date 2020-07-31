@@ -9,7 +9,6 @@
             [health-crud.services.patient-params-extractor :as extractor]))
 
 (defn index [params]
-  (dump/handle-dump params)
   (if (contains? params :page)
     (let [page (Math/abs (Integer/parseInt (:page params)))]
       (view/index (model/paginate page 5) [] page))
@@ -19,7 +18,6 @@
   (view/new-patient []))
 
 (defn create [request]
-  (dump/handle-dump (:params request))
   (let [patient (extractor/extract-patient (:params request))
         errors (validator/validate patient)]
     (if (empty? errors)
@@ -33,7 +31,6 @@
     (view/show-patient (model/get-patient (Integer/parseInt id)) [])))
 
 (defn update-patient [id, request]
-  (dump/handle-dump request)
   (let [patient (extractor/extract-patient request)
         patient_id (Integer/parseInt id)
         errors (validator/validate patient)]
@@ -45,7 +42,6 @@
 
 (defn delete-patient [id]
   (when-not (str/blank? id)
-    (println id)
     (model/delete (Integer/parseInt id))
     (ring/redirect "/patients")))
 
