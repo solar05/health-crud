@@ -12,7 +12,7 @@
 (defn paginate [patients-page num-per-patient]
   (vec (sql/query spec
                   [(str "select * from (select * from patients where deleted_at IS NULL) AS patients order by id desc "
-                        "limit " num-per-patient "offset " (Math/abs (* 5 patients-page)))])))
+                        "limit " num-per-patient "offset " (Math/abs (* num-per-patient patients-page)))])))
 
 (defn prepare-date [date]
   (java.sql.Timestamp/valueOf (str date " 00:00:00")))

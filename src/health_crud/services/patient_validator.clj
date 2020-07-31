@@ -1,5 +1,6 @@
 (ns health-crud.services.patient-validator
-  (:require [clojure.spec.alpha :as s]))
+  (:require [clojure.spec.alpha :as s]
+            [clojure.set :as set]))
 (s/def ::ne-string (s/and string? not-empty))
 
 (s/def ::valid-name (partial re-matches #"([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){2,30}"))
@@ -43,8 +44,17 @@
    :adress "Invalid adress!"
    :chi_number "Invalid CHI number!"})
 
+(def fields-map
+  #{:first_name :second_name :gender :birth_date :adress :chi_number})
+
+(defn fields-filled? [params]
+  (= (count (set/intersection (set (keys params)) fields-map)) 6))
+
 (defn validate [params]
-  (reduce-kv (fn [acc k v]
-               (if ((k validations-map) v)
-                 acc
-                 (conj acc (k errors-map)))) [] params))
+  (let [errors []]
+    (if (fields-filled? params)
+      errors (conj errors "Some fields are missing!"))
+    (reduce-kv (fn [acc k v]
+                 (if ((k validations-map) v)
+                   acc
+                   (conj acc (k errors-map)))) errors params)))

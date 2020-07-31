@@ -22,6 +22,7 @@
    (if (<= page 0)
      [:a {:class "btn btn-secondary" :href "#" :disabled true} "Back"]
      [:a {:class "btn btn-primary" :href (util/url "/patients?page=" (dec page))} "Back"])
+   [:div {:class "btn btn-success"} (inc page)]
    (if (< patients-count 5)
      [:a {:class "btn btn-secondary" :href "#" :disabled true} "Next"]
      [:a {:class "btn btn-primary" :href (util/url "/patients?page=" (inc page))} "Next"])])
