@@ -2,7 +2,6 @@
   (:require [compojure.core :refer [defroutes GET POST DELETE PATCH]]
             [clojure.string :as str]
             [ring.util.response :as ring]
-            [ring.handler.dump :as dump]
             [health-crud.views.patients :as view]
             [health-crud.models.patient :as model]
             [health-crud.services.patient-validator :as validator]
@@ -18,13 +17,16 @@
   (view/new-patient []))
 
 (defn create [request]
-  (let [patient (extractor/extract-patient (:params request))
-        errors (validator/validate patient)]
-    (if (empty? errors)
-      (do
-        (model/create patient)
-        (view/index (model/paginate 0 5) ["Patient successfully created!"] 0))
-      (view/new-patient errors))))
+  (let [post-errors (validator/validate-params (:params request))]
+    (if (empty? post-errors)
+      (let [patient (extractor/extract-patient (:params request))
+            errors (validator/validate-patient patient)]
+        (if (empty? errors)
+          (do
+            (model/create patient)
+            (view/index (model/paginate 0 5) ["Patient successfully created!"] 0))
+          (view/new-patient errors)))
+      (view/new-patient post-errors))))
 
 (defn show-patient [id]
   (when-not (str/blank? id)
@@ -32,8 +34,8 @@
 
 (defn update-patient [id, request]
   (let [patient (extractor/extract-patient request)
-        patient_id (Integer/parseInt id)
-        errors (validator/validate patient)]
+        errors (validator/validate-patient patient)
+        patient_id (Integer/parseInt id)]
     (if (empty? errors)
       (do
         (model/update-patient patient_id patient)

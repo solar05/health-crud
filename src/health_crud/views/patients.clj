@@ -67,7 +67,7 @@
                    [:option {:value "M"} "Male"]
                    [:option {:value "F"} "Female"]]]
                  [:div {:class "form-group"}
-                  [:span {:class "badge badge-primary"} (stringify-curr-val (:birth_date patient))]
+                  [:span {:class "badge badge-primary"} (stringify-curr-val (stringify-date (:birth_date patient)))]
                   [:input {:name "birth_date" :type "date" :required true :class "form-control" :placeholder "Birth date" :value (stringify-date (:birth_date patient))}]]
                  [:div {:class "form-group"}
                   [:span {:class "badge badge-primary"} (stringify-curr-val (:adress patient))]
