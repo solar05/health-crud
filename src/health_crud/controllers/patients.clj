@@ -17,7 +17,7 @@
   (view/new-patient []))
 
 (defn create [request]
-  (let [post-errors (validator/validate-params (:params request))]
+  (let [post-errors (validator/validate-patient-params (:params request))]
     (if (empty? post-errors)
       (let [patient (extractor/extract-patient (:params request))
             errors (validator/validate-patient patient)]

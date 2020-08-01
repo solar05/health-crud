@@ -50,7 +50,7 @@
 (s/def ::patient-fields (fn [params]
                           (= (count (set/intersection (set (keys params)) fields-map)) 6)))
 
-(defn validate-params [params]
+(defn validate-patient-params [params]
   (if (s/valid? ::patient-fields params)
     [] ["Some fields are missing!"]))
 
