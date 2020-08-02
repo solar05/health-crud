@@ -23,14 +23,14 @@
             errors (validator/validate-patient patient)]
         (if (empty? errors)
           (do
-            (model/create patient)
+            (model/create [] patient)
             (view/index (model/paginate 0 5) ["Patient successfully created!"] 0))
           (view/new-patient errors)))
       (view/new-patient post-errors))))
 
 (defn show-patient [id]
   (when-not (str/blank? id)
-    (view/show-patient (model/get-patient (Integer/parseInt id)) [])))
+    (view/show-patient (model/get-patient [] (Integer/parseInt id)) [])))
 
 (defn update-patient [id, request]
   (let [patient (extractor/extract-patient request)
@@ -38,13 +38,13 @@
         patient_id (Integer/parseInt id)]
     (if (empty? errors)
       (do
-        (model/update-patient patient_id patient)
+        (model/update-patient [] patient_id patient)
         (view/index (model/paginate 0 5) ["Patient successfully updated!"] 0))
       (view/show-patient patient errors))))
 
 (defn delete-patient [id]
   (when-not (str/blank? id)
-    (model/delete (Integer/parseInt id))
+    (model/delete [] (Integer/parseInt id))
     (ring/redirect "/patients")))
 
 (defroutes routes

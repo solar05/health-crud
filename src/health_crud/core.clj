@@ -20,7 +20,7 @@
   (ring/run-jetty app {:port port :join? false}))
 
 (defn -main []
-  (schema/migrate)
+  (schema/migrate [])
   (let [port (Integer/parseInt (or (System/getenv "PORT") "4000"))]
     (start port)))
 

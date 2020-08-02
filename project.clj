@@ -21,5 +21,5 @@
             [lein-kibit "0.1.8"]
             [lein-ring "0.8.13"]
             [hiccup "1.0.5"]]
-  :profiles {:dev {:dependencies [[ring-mock "0.1.5"]]}
+  :profiles {:dev {:dependencies [[org.xerial/sqlite-jdbc "3.32.3.2"]]}
              :uberjar {:aot :all}})

@@ -10,6 +10,14 @@
    :adress "asdas"
    :chi_number "1111111111111111"})
 
+(def valid-update-patient-data
+  {:first_name "one"
+   :second_name "two"
+   :gender "F"
+   :birth_date "2010-02-10"
+   :adress "rewq"
+   :chi_number "222222222222222"})
+
 (def invalid-patient-data
   {:first_name "1321"
    :second_name "343"
