@@ -1,7 +1,7 @@
 (ns health-crud.models.patient
   (:require [clojure.java.jdbc :as sql]))
 
-(def spec (or (System/getenv "DATABASE_URL") "postgresql://localhost:5432/health-crud"))
+(def spec (or (System/getenv "DATABASE_URL") "postgresql://localhost:5432/patients"))
 
 (defn now []
   (java.time.LocalDateTime/now))
