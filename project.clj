@@ -10,7 +10,6 @@
                  [org.clojure/java.jdbc "0.7.11"]
                  [ring/ring-defaults "0.3.2"]
                  [org.postgresql/postgresql "42.2.14"]]
-  :main ^:skip-aot health-crud.core
   :uberjar-name "health-crud.jar"
   :ring {:handler shouter.web/application
          :init health-crud.models.migrations/migrate}
