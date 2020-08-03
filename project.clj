@@ -11,8 +11,6 @@
                  [ring/ring-defaults "0.3.2"]
                  [org.postgresql/postgresql "42.2.14"]]
   :uberjar-name "health-crud.jar"
-  :ring {:handler shouter.web/application
-         :init health-crud.models.migrations/migrate}
   :plugins [[jonase/eastwood "0.3.10"]
             [lein-cljfmt "0.6.8"]
             [lein-kibit "0.1.8"]
