@@ -12,7 +12,6 @@
                  [org.postgresql/postgresql "42.2.14"]]
   :main ^:skip-aot health-crud.core
   :uberjar-name "health-crud.jar"
-  :target-path "target/%s"
   :ring {:handler shouter.web/application
          :init health-crud.models.migrations/migrate}
   :plugins [[jonase/eastwood "0.3.10"]
@@ -20,5 +19,4 @@
             [lein-kibit "0.1.8"]
             [lein-ring "0.8.13"]
             [hiccup "1.0.5"]]
-  :profiles {:dev {:dependencies [[org.xerial/sqlite-jdbc "3.32.3.2"]]}
-             :uberjar {:aot :all}})
+  :profiles {:dev {:dependencies [[org.xerial/sqlite-jdbc "3.32.3.2"]]}})
