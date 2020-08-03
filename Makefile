@@ -24,5 +24,11 @@ build:
 compose-up:
 	docker-compose up
 
+compose-dev-up:
+	docker-compose -f docker-compose.dev.yml up
+
+compose-dev-down:
+	docker-compose -f docker-compose.dev.yml down
+
 compose-down:
 	docker-compose down
