@@ -21,6 +21,9 @@ run:
 build:
 	docker build -t health-crud .
 
-docker-run:
-	docker run -it --rm --name health-app health-crud
+compose-run:
+	docker-compose up
+
+compose-down:
+    docker-compose down
 

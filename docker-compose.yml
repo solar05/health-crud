@@ -1,0 +1,23 @@
+version: '3'
+services:
+  db:
+    image: postgres:latest
+    volumes:
+      - ./resources/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_DB=patients
+  health-crud:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /usr/src/app/target/uberjar/
+    command: "java -jar health-crud.jar"
+    ports:
+      - "4000:4000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:pgpassword@db:5432/patients
+    depends_on:
+      - db

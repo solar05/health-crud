@@ -25,19 +25,19 @@
                           [:deleted_at :timestamp]]))))
 
 (defn create-patients-test-db [db]
-    (sql/db-do-commands db
-                        (sql/create-table-ddl
-                         :patients
-                         [[:id :integer "PRIMARY KEY AUTOINCREMENT NOT NULL"]
-                          [:first_name :varchar "NOT NULL"]
-                          [:second_name :varchar "NOT NULL"]
-                          [:gender :varchar "NOT NULL"]
-                          [:birth_date :timestamp "NOT NULL"]
-                          [:adress :varchar "NOT NULL"]
-                          [:chi_number :varchar "NOT NULL"]
-                          [:created_at :timestamp "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]
-                          [:updated_at :timestamp "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]
-                          [:deleted_at :timestamp]])))
+  (sql/db-do-commands db
+                      (sql/create-table-ddl
+                       :patients
+                       [[:id :integer "PRIMARY KEY AUTOINCREMENT NOT NULL"]
+                        [:first_name :varchar "NOT NULL"]
+                        [:second_name :varchar "NOT NULL"]
+                        [:gender :varchar "NOT NULL"]
+                        [:birth_date :timestamp "NOT NULL"]
+                        [:adress :varchar "NOT NULL"]
+                        [:chi_number :varchar "NOT NULL"]
+                        [:created_at :timestamp "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]
+                        [:updated_at :timestamp "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]
+                        [:deleted_at :timestamp]])))
 
 (defn migrate [db]
   (when-not (migrated?)
