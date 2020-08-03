@@ -5,4 +5,4 @@ COPY project.clj /usr/src/app/
 RUN lein deps
 COPY . /usr/src/app
 RUN lein uberjar
-CMD ["java", "-jar", "health-crud.jar"]
+CMD ["java", "-jar", "./target/uberjar/health-crud.jar"]
