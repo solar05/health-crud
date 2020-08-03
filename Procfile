@@ -1,1 +1,1 @@
-web: java $JVM_OPTS -cp target/health-crud.jar clojure.main -m health-crud.core
+web: java $JVM_OPTS -cp target/health-crud.jar
