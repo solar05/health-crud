@@ -14,3 +14,13 @@ check-namespaces:
 
 tests:
 	lein trampoline test
+
+run:
+	lein run
+
+build:
+	docker build -t health-crud .
+
+docker-run:
+	docker run -it --rm --name health-app health-crud
+
