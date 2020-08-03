@@ -25,5 +25,4 @@ compose-run:
 	docker-compose up
 
 compose-down:
-    docker-compose down
-
+	docker-compose down
