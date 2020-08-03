@@ -21,7 +21,7 @@ run:
 build:
 	docker build -t health-crud .
 
-compose-run:
+compose-up:
 	docker-compose up
 
 compose-down:

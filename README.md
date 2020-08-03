@@ -4,18 +4,15 @@
 A simple crud that uses Clojure.
 
 ## Commands
-To run project, firstly, create postgres db:
+To run project manually, run:
 ```bash
 $ createdb patients
-```
-and after that you can run project manually:
-```bash
 $ make run
 ```
-or use docker:
+Or you can use docker:
 ```bash
-$ make build
-$ make docker-run
+$ make compose-run
+$ make compose-down
 ```
 
 To run linter, namespace checker and so on use:

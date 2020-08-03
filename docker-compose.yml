@@ -9,6 +9,8 @@ services:
       - 5432
     environment:
       - POSTGRES_DB=patients
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
   health-crud:
     build:
       context: .
@@ -18,6 +20,6 @@ services:
     ports:
       - "4000:4000"
     environment:
-      - DATABASE_URL=postgresql://postgres:pgpassword@db:5432/patients
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/patients
     depends_on:
       - db
