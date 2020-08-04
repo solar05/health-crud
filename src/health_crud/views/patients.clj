@@ -95,7 +95,7 @@
         [:td (h (:id patient))]
         [:td (h (:first_name patient))]
         [:td (h (:second_name patient))]
-        [:td (:birth_date patient)]
+        [:td (stringify-date (:birth_date patient))]
         [:td (h (:gender patient))]
         [:td [:div {:class "btn-group"}
               [:a {:class "btn btn-primary" :href (util/url "/patients/" (:id patient) "/edit")} "Update"]
