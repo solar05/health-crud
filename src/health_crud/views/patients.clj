@@ -101,7 +101,7 @@
               [:a {:class "btn btn-primary" :href (util/url "/patients/" (:id patient) "/edit")} "Update"]
               (form/form-to [:delete (util/url "/patients/" (:id patient))]
                             (anti-forgery/anti-forgery-field)
-                            (form/submit-button {:class "btn btn-danger"} "Delete"))]]])
+                            (form/submit-button {:class "btn btn-danger" :onclick "if (! confirm('Delete patient?')) { return false;}"} "Delete"))]]])
      patients)]
    (display-pagination page (count patients))])
 
