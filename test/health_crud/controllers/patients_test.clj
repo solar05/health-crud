@@ -7,5 +7,5 @@
   (testing "Index action."
     (let [response (app {:uri "/patients" :request-method :get})]
       (is (= 200 (:status response)))
-      (is (true? (not (empty? (:body response))))))))
+      (is (true? (seq (:body response)))))))
 
