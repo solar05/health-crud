@@ -4,6 +4,7 @@
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.flash :refer [wrap-flash]]
+            [ring.middleware.json :refer [wrap-json-response wrap-json-body]]
             [health-crud.controllers.patients :as patients]
             [health-crud.views.layout :as layout]
             [health-crud.models.migrations :as schema])
@@ -16,11 +17,13 @@
 
 (def app (wrap-defaults routes site-defaults))
 
+(app {:uri "/health" :request-method :get})
+
 (defn start [port]
   (ring/run-jetty app {:port port :join? false}))
 
 (defn -main []
-  (schema/migrate [])
+  ;(schema/migrate [])
   (let [port (Integer/parseInt (or (System/getenv "PORT") "4000"))]
     (start port)))
 

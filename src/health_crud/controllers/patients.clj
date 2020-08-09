@@ -5,13 +5,19 @@
             [health-crud.views.patients :as view]
             [health-crud.models.patient :as model]
             [health-crud.services.patient-validator :as validator]
+            [ring.handler.dump :as handler]
+            [health-crud.services.patient-json-service :as json]
             [health-crud.services.patient-params-extractor :as extractor]))
 
 (defn index [params]
   (if (contains? params :page)
     (let [page (Math/abs (Integer/parseInt (:page params)))]
-      (view/index (model/paginate page 5) [] page))
-    (view/index (model/paginate 0 5) [] 0)))
+      {:status 200
+       :headers {"Content-Type" "text/json"}
+       :body (json/write-json (model/paginate [] page 5))})
+    {:status 200
+     :headers {"Content-Type" "text/json"}
+     :body (json/write-json (model/paginate [] 0 5))}))
 
 (defn new-patient []
   (view/new-patient []))
@@ -47,9 +53,18 @@
     (model/delete [] (Integer/parseInt id))
     (ring/redirect "/patients")))
 
+(defn health []
+  {:status 200 :headers {"Content-Type" "text/json"}})
+
+(defn al []
+  {:status 200
+   :headers {"Content-Type" "text/json"}
+   :body (json/write-json (model/all []))})
+
 (defroutes routes
-  (GET "/" [] (ring/redirect "/patients"))
+  (GET "/health" [] (health))
   (GET  "/patients" [& params] (index params))
+  (GET "/all" [] (al))
   (GET "/patients/new" [] (new-patient))
   (GET "/patients/:id/edit" [id] (show-patient id))
   (PATCH "/patients/:id" [& params] (update-patient (:id params) params))

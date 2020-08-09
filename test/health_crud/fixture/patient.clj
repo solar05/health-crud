@@ -1,4 +1,5 @@
-(ns health-crud.fixture.patient)
+(ns health-crud.fixture.patient
+  (:require [health-crud.models.patient :as model]))
 
 (def invalid-params {:test "test"})
 

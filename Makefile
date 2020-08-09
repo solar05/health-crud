@@ -1,34 +1,13 @@
-checks: check-format check-style check-namespaces
-
+checks:	check-format check-namespaces
+fix:
+	clj -Sdeps '{:deps {lein-cljfmt {:mvn/version "0.6.4"}}}' -m cljfmt.main fix
 check-format:
-	lein cljfmt check
-
-fix-format:
-	lein cljfmt fix
-
-check-style:
-	lein kibit
-
+	clj -Sdeps '{:deps {lein-cljfmt {:mvn/version "0.6.4"}}}' -m cljfmt.main check
 check-namespaces:
-	lein eastwood '{:exclude-linters [:suspicious-expression]}'
-
+	clj -A:kibit
 tests:
-	lein trampoline test
-
+	clj -A:test
+uber:
+	clj -Sdeps '{:deps {uberdeps {:mvn/version "0.1.11"}}}' -m uberdeps.uberjar
 run:
-	lein run
-
-build:
-	docker build -t health-crud .
-
-compose-up:
-	docker-compose up
-
-compose-dev-up:
-	docker-compose -f docker-compose.dev.yml up
-
-compose-dev-down:
-	docker-compose -f docker-compose.dev.yml down
-
-compose-down:
-	docker-compose down
+	java -cp target/health-crud.jar clojure.main -m health-crud.core

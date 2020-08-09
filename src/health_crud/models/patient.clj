@@ -8,12 +8,13 @@
 
 (defn all [db]
   (let [conn (if (empty? db) spec db)]
-    (vec (sql/query db ["select * from patients where deleted_at IS NULL order by id desc"]))))
+    (vec (sql/query conn ["select * from patients where deleted_at IS NULL order by id desc"]))))
 
-(defn paginate [patients-page num-per-patient]
-  (vec (sql/query spec
-                  [(str "select * from (select * from patients where deleted_at IS NULL) AS patients order by id desc "
-                        "limit " num-per-patient "offset " (Math/abs (* num-per-patient patients-page)))])))
+(defn paginate [db patients-page num-per-patient]
+  (let [conn (if (empty? db) spec db)]
+    (vec (sql/query conn
+                    [(str "select * from (select * from patients where deleted_at IS NULL) AS patients order by id desc "
+                          "limit " num-per-patient "offset " (Math/abs (* num-per-patient patients-page)))]))))
 
 (defn prepare-date [date]
   (java.sql.Timestamp/valueOf (str date " 00:00:00")))

@@ -52,10 +52,10 @@
 
 (defn validate-patient-params [params]
   (if (s/valid? ::patient-fields params)
-    [] ["Some fields are missing!"]))
+    {} (set/difference fields-map (set (keys params)))))
 
 (defn validate-patient [params]
   (reduce-kv (fn [acc k v]
                (if ((k validations-map) v)
                  acc
-                 (conj acc (k errors-map)))) [] params))
+                 (assoc acc k (k errors-map)))) {} params))
