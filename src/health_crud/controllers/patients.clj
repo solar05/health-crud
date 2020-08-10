@@ -1,11 +1,8 @@
 (ns health-crud.controllers.patients
   (:require [compojure.core :refer [defroutes GET POST DELETE PATCH]]
             [clojure.string :as str]
-            [ring.util.response :as ring]
-            [health-crud.views.patients :as view]
             [health-crud.models.patient :as model]
             [health-crud.services.patient-validator :as validator]
-            [ring.handler.dump :as handler]
             [health-crud.services.patient-json-service :as json]
             [health-crud.services.patient-params-extractor :as extractor]))
 
@@ -18,9 +15,6 @@
     {:status 200
      :headers {"Content-Type" "text/json"}
      :body (json/write-json (model/paginate [] 0 5))}))
-
-(defn new-patient []
-  (view/new-patient []))
 
 (defn create [request]
   (let [post-errors (validator/validate-patient-params (:body request))]
@@ -76,7 +70,6 @@
 (defroutes routes
   (GET "/health" [] (health))
   (GET  "/patients" [& params] (index params))
-  (GET "/patients/new" [] (new-patient))
   (GET "/patients/:id/edit" [id] (show-patient id))
   (PATCH "/patients/:id" params (update-patient (:id (:params params)) params))
   (POST "/patients" patient (create patient))
