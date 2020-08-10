@@ -68,7 +68,7 @@
   {:status 200 :headers {"Content-Type" "text/json"}})
 
 (defroutes routes
-  (GET "/health" [] (health))
+  (GET "/" [] (health))
   (GET  "/patients" [& params] (index params))
   (GET "/patients/:id/edit" [id] (show-patient id))
   (PATCH "/patients/:id" params (update-patient (:id (:params params)) params))

@@ -2,17 +2,14 @@
   (:require [ring.adapter.jetty :as ring]
             [compojure.core :refer [POST defroutes]]
             [compojure.route :as route]
-            [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
             [ring.middleware.json :refer [wrap-json-response wrap-json-body]]
             [health-crud.controllers.patients :as patients]
-            [health-crud.views.layout :as layout]
             [health-crud.models.migrations :as schema])
   (:gen-class))
 
 (defroutes routes
   patients/routes
-  (route/resources "/")
-  (route/not-found (layout/four-oh-four)))
+  (route/resources "/"))
 
 (def app (-> routes wrap-json-response (wrap-json-body {:keywords? true})))
 

@@ -8,5 +8,5 @@
 
 (deftest app-test
   (testing "Basic request to app."
-    (let [response (app {:uri "/health" :request-method :get})]
+    (let [response (app {:uri "/" :request-method :get})]
       (is (= 200 (:status response))))))
