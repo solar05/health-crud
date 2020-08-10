@@ -70,7 +70,7 @@
 (defroutes routes
   (GET "/" [] (health))
   (GET  "/patients" [& params] (index params))
-  (GET "/patients/:id/edit" [id] (show-patient id))
+  (GET "/patients/:id" [id] (show-patient id))
   (PATCH "/patients/:id" params (update-patient (:id (:params params)) params))
   (POST "/patients" patient (create patient))
   (DELETE "/patients/:id" [id] (delete-patient id)))
