@@ -3,7 +3,8 @@
             [health-crud.core :refer [app]]
             [clojure.test :refer :all]
             [ring.mock.request :as mock]
-            [clojure.data.json :as json]))
+            [clojure.data.json :as json]
+            [clojure.walk :refer :all]))
 
 (deftest index-patient-test
   (testing "Index action working."
@@ -26,5 +27,4 @@
       (is (= (keys fixture/invalid-patient-data) (keys (json/read-str (:body response) :key-fn keyword))))))
   (testing "Create action errors with invalid params"
     (let [response (app   (mock/json-body (mock/request :post "/patients") fixture/invalid-params))]
-      (is (= 400 (:status response)))
-      (is (= (str (keys fixture/valid-patient-data)) (:body response))))))
+      (is (= 400 (:status response))))))
