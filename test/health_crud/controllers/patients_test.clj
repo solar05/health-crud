@@ -26,4 +26,6 @@
       (is (= (keys fixture/invalid-patient-data) (keys (json/read-str (:body response) :key-fn keyword))))))
   (testing "Create action errors with invalid params"
     (let [response (app   (mock/json-body (mock/request :post "/patients") fixture/invalid-params))]
+      (is (= 400 (:status response)))
+      (print (:body response))
       (is (= 400 (:status response))))))
