@@ -23,16 +23,22 @@
   (view/new-patient []))
 
 (defn create [request]
-  (let [post-errors (validator/validate-patient-params (:params request))]
+  (let [post-errors (validator/validate-patient-params (:body request))]
     (if (empty? post-errors)
-      (let [patient (extractor/extract-patient (:params request))
+      (let [patient (extractor/extract-patient (:body request))
             errors (validator/validate-patient patient)]
         (if (empty? errors)
           (do
             (model/create [] patient)
-            (view/index (model/paginate 0 5) ["Patient successfully created!"] 0))
-          (view/new-patient errors)))
-      (view/new-patient post-errors))))
+            {:status 201
+             :headers {"Content-Type" "text/json"}
+             :body (json/write-json patient)})
+          {:status 422
+           :headers {"Content-Type" "text/json"}
+           :body (json/write-json errors)}))
+      {:status 400
+       :headers {"Content-Type" "text/json"}
+       :body (json/write-json post-errors)})))
 
 (defn show-patient [id]
   (when-not (str/blank? id)

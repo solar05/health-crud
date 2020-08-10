@@ -4,8 +4,8 @@
 (def invalid-params {:test "test"})
 
 (def valid-patient-data
-  {:first_name "test"
-   :second_name "test"
+  {:first_name "testt"
+   :second_name "testt"
    :gender "M"
    :birth_date "2020-07-11"
    :adress "asdas"
@@ -23,6 +23,6 @@
   {:first_name "1321"
    :second_name "343"
    :gender "T"
-   :birth_date "2020-07-11"
-   :adress "asdas"
+   :birth_date "202007-11"
+   :adress ""
    :chi_number "1111"})
