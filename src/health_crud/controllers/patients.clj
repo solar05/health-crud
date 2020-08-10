@@ -42,37 +42,42 @@
 
 (defn show-patient [id]
   (when-not (str/blank? id)
-    (view/show-patient (model/get-patient [] (Integer/parseInt id)) [])))
+    (let [patient (model/get-patient [] (Integer/parseInt id))]
+      (if (nil? patient)
+        {:status 404}
+        {:status 200
+         :headers {"Content-Type" "text/json"}
+         :body (json/write-json patient)}))))
 
-(defn update-patient [id, request]
-  (let [patient (extractor/extract-patient request)
+(defn update-patient [id request]
+  (let [patient (extractor/extract-patient (:body request))
         errors (validator/validate-patient patient)
         patient_id (Integer/parseInt id)]
     (if (empty? errors)
       (do
         (model/update-patient [] patient_id patient)
-        (view/index (model/paginate 0 5) ["Patient successfully updated!"] 0))
-      (view/show-patient patient errors))))
+        {:status 200
+         :headers {"Content-Type" "text/json"}
+         :body (json/write-json patient)})
+      {:status 422
+       :headers {"Content-Type" "text/json"}
+       :body (json/write-json errors)})))
 
 (defn delete-patient [id]
   (when-not (str/blank? id)
     (model/delete [] (Integer/parseInt id))
-    (ring/redirect "/patients")))
+    {:status 200
+     :headers {"Content-Type" "text/json"}
+     :body (json/write-json {:id id})}))
 
 (defn health []
   {:status 200 :headers {"Content-Type" "text/json"}})
 
-(defn al []
-  {:status 200
-   :headers {"Content-Type" "text/json"}
-   :body (json/write-json (model/all []))})
-
 (defroutes routes
   (GET "/health" [] (health))
   (GET  "/patients" [& params] (index params))
-  (GET "/all" [] (al))
   (GET "/patients/new" [] (new-patient))
   (GET "/patients/:id/edit" [id] (show-patient id))
-  (PATCH "/patients/:id" [& params] (update-patient (:id params) params))
+  (PATCH "/patients/:id" params (update-patient (:id (:params params)) params))
   (POST "/patients" patient (create patient))
   (DELETE "/patients/:id" [id] (delete-patient id)))

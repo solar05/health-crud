@@ -59,3 +59,13 @@
                (if ((k validations-map) v)
                  acc
                  (assoc acc k (k errors-map)))) {} params))
+
+(def vali
+  {:first_name "tttest"
+   :second_name "two"
+   :gender "F"
+   :birth_date "2010-02-10"
+   :adress "rewq"
+   :chi_number "1212121212121212"})
+
+(validate-patient vali)

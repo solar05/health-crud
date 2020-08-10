@@ -51,3 +51,4 @@
                   :gender (:gender patient)
                   :chi_number (:chi_number patient)}
                  ["id = ?" id])))
+

@@ -12,12 +12,12 @@
    :chi_number "1111111111111111"})
 
 (def valid-update-patient-data
-  {:first_name "one"
+  {:first_name "tttest"
    :second_name "two"
    :gender "F"
-   :birth_date "2010-02-10"
+   :birth_date "2010-07-14"
    :adress "rewq"
-   :chi_number "222222222222222"})
+   :chi_number "1212121212121212"})
 
 (def invalid-patient-data
   {:first_name "1321"
