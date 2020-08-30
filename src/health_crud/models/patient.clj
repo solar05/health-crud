@@ -18,11 +18,18 @@
                     (order-by [:id :desc])
                     sql/format)))))
 
-(defn paginate [db patients-page num-per-patient]
-  (let [conn (if (empty? db) spec db)]
+(defn paginate [db-conn patients-page num-per-patient]
+  (let [conn (if (empty? db-conn) spec db-conn)]
     (vec (db/query conn
-                   [(str "select * from (select * from patients where deleted_at IS NULL) AS patients order by id desc "
-                         "limit " num-per-patient "offset " (Math/abs (* num-per-patient patients-page)))]))))
+                   (->
+                    (select :*)
+                    (from [(-> (select :*)
+                               (from :patients)
+                               (where [:= :deleted_at nil])) :patients])
+                    (order-by [:id :desc])
+                    (limit num-per-patient)
+                    (offset (Math/abs (* num-per-patient patients-page)))
+                    sql/format)))))
 
 (defn prepare-date [date]
   (java.sql.Timestamp/valueOf (str date " 00:00:00")))
