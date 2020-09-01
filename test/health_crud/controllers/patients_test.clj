@@ -31,10 +31,10 @@
 
 (deftest show-patient-test
   (testing "Show action on not existing resource."
-    (let [response (app {:uri "/patients/1/edit" :request-method :get})]
+    (let [response (app {:uri "/patients/1" :request-method :get})]
       (is (= 404 (:status response)))))
   (testing "Show action on existing resource."
-    (let [response (app {:uri "/patients/21/edit" :request-method :get})]
+    (let [response (app {:uri "/patients/21" :request-method :get})]
       (is (= 200 (:status response)))
       (is (= (:first_name fixture/valid-patient-data) (:first_name (json/read-str (:body response) :key-fn keyword)))))))
 

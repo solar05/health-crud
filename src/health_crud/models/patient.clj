@@ -1,7 +1,7 @@
 (ns health-crud.models.patient
   (:require [clojure.java.jdbc :as db]
             [honeysql.core :as sql]
-            [honeysql.helpers :refer :all :as helpers]))
+            [honeysql.helpers :as h]))
 
 (def spec (or (System/getenv "DATABASE_URL") "postgresql://localhost:5432/patients"))
 
@@ -12,23 +12,23 @@
   (let [conn (if (empty? db-conn) spec db-conn)]
     (vec (db/query conn
                    (->
-                    (select :*)
-                    (from :patients)
-                    (where [:= :deleted_at nil])
-                    (order-by [:id :desc])
+                    (h/select :*)
+                    (h/from :patients)
+                    (h/where [:= :deleted_at nil])
+                    (h/order-by [:id :desc])
                     sql/format)))))
 
 (defn paginate [db-conn patients-page num-per-patient]
   (let [conn (if (empty? db-conn) spec db-conn)]
     (vec (db/query conn
                    (->
-                    (select :*)
-                    (from [(-> (select :*)
-                               (from :patients)
-                               (where [:= :deleted_at nil])) :patients])
-                    (order-by [:id :desc])
-                    (limit num-per-patient)
-                    (offset (Math/abs (* num-per-patient patients-page)))
+                    (h/select :*)
+                    (h/from [(-> (h/select :*)
+                               (h/from :patients)
+                               (h/where [:= :deleted_at nil])) :patients])
+                    (h/order-by [:id :desc])
+                    (h/limit num-per-patient)
+                    (h/offset (Math/abs (* num-per-patient patients-page)))
                     sql/format)))))
 
 (defn prepare-date [date]
