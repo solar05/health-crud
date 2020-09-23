@@ -24,8 +24,8 @@
                    (->
                     (h/select :*)
                     (h/from [(-> (h/select :*)
-                               (h/from :patients)
-                               (h/where [:= :deleted_at nil])) :patients])
+                                 (h/from :patients)
+                                 (h/where [:= :deleted_at nil])) :patients])
                     (h/order-by [:id :desc])
                     (h/limit num-per-patient)
                     (h/offset (Math/abs (* num-per-patient patients-page)))
